@@ -28,14 +28,10 @@ export const CloudFormationStackType = {
 };
 
 @Injectable()
-export class AwsCloudFormationStackService {
-  constructor(
-    private readonly secretKeyTokenService: AwsSecretKeyTokenService
-  ) {}
+export class AwsCloudformationStackService {
+  constructor(private readonly secretKeyTokenService: AwsSecretKeyTokenService) {}
 
-  async createResources(
-    stack: AwsResourceStack & {environment: AwsEnvironment}
-  ): Promise<CreateStackCommandOutput> {
+  async createResources(stack: AwsResourceStack & {environment: AwsEnvironment}): Promise<CreateStackCommandOutput> {
     // [step 1] Create a cloudformation client.
     const client = await this.getCloudFormationClient(stack.environment);
 
@@ -56,12 +52,10 @@ export class AwsCloudFormationStackService {
           ':role/aws-service-role/config.amazonaws.com/AWSServiceRoleForConfig';
         break;
       case CloudFormationStackType.MESSAGE_TRACKER:
-        stack.params!['LambdaCodeS3BucketName'] =
-          stack.environment.s3ForCloudformation;
+        stack.params!['LambdaCodeS3BucketName'] = stack.environment.s3ForCloudformation;
         stack.params!['PinpointEventProcessorLambdaCodeArchiveName'] =
           'quickstart-message-tracker/codes/pinpoint-event-receiver.zip';
-        stack.params!['AlarmLambdaCodeArchiveName'] =
-          'quickstart-message-tracker/codes/alarm-message-sender.zip';
+        stack.params!['AlarmLambdaCodeArchiveName'] = 'quickstart-message-tracker/codes/alarm-message-sender.zip';
         stack.params!['MessageShooterLambdaCodeArchiveName'] =
           'quickstart-message-tracker/codes/pinpoint-message-sender.zip';
         break;
@@ -81,9 +75,7 @@ export class AwsCloudFormationStackService {
     return await client.send(command);
   }
 
-  async describeResources(
-    stack: AwsResourceStack & {environment: AwsEnvironment}
-  ) {
+  async describeResources(stack: AwsResourceStack & {environment: AwsEnvironment}) {
     // [step 1] Create a cloudformation client.
     const client = await this.getCloudFormationClient(stack.environment);
 
@@ -95,9 +87,7 @@ export class AwsCloudFormationStackService {
     return await client.send(command);
   }
 
-  async destroyResources(
-    stack: AwsResourceStack & {environment: AwsEnvironment}
-  ): Promise<DeleteStackCommandOutput> {
+  async destroyResources(stack: AwsResourceStack & {environment: AwsEnvironment}): Promise<DeleteStackCommandOutput> {
     // [step 1] Create a cloudformation client.
     const client = await this.getCloudFormationClient(stack.environment);
 
@@ -115,36 +105,23 @@ export class AwsCloudFormationStackService {
 
   //* Check parameters before building stack.
   checkStackParams(params: {stackType: string; stackParams: object}): boolean {
-    return this.getStackServiceByType(params.stackType)?.checkStackParams(
-      params.stackParams
-    );
+    return this.getStackServiceByType(params.stackType)?.checkStackParams(params.stackParams);
   }
 
-  private async getCloudFormationClient(
-    environment: AwsEnvironment
-  ): Promise<CloudFormationClient> {
+  private async getCloudFormationClient(environment: AwsEnvironment): Promise<CloudFormationClient> {
     return new CloudFormationClient({
       credentials: {
         accessKeyId: environment.awsAccessKeyId,
-        secretAccessKey: this.secretKeyTokenService.decode(
-          environment.awsSecretAccessKey
-        ),
+        secretAccessKey: this.secretKeyTokenService.decode(environment.awsSecretAccessKey),
       },
       region: environment.awsRegion,
     });
   }
 
-  private getStackTemplate(
-    stack: AwsResourceStack & {environment: AwsEnvironment}
-  ): string {
-    const templatePath = this.getStackServiceByType(
-      stack.type
-    ).getStackTemplate();
+  private getStackTemplate(stack: AwsResourceStack & {environment: AwsEnvironment}): string {
+    const templatePath = this.getStackServiceByType(stack.type).getStackTemplate();
 
-    if (
-      stack.environment.awsRegion &&
-      stack.environment.awsRegion.startsWith('cn')
-    ) {
+    if (stack.environment.awsRegion && stack.environment.awsRegion.startsWith('cn')) {
       return (
         'https://' +
         stack.environment.s3ForCloudformation +
@@ -154,12 +131,7 @@ export class AwsCloudFormationStackService {
         templatePath
       );
     } else {
-      return (
-        'https://' +
-        stack.environment.s3ForCloudformation +
-        '.s3.amazonaws.com/' +
-        templatePath
-      );
+      return 'https://' + stack.environment.s3ForCloudformation + '.s3.amazonaws.com/' + templatePath;
     }
   }
 

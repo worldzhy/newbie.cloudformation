@@ -11,18 +11,14 @@ export class AwsEnvironmentService {
   ) {}
 
   async create(args: Prisma.AwsEnvironmentCreateArgs) {
-    args.data.awsSecretAccessKey = this.secretKeyTokenService.sign(
-      args.data.awsSecretAccessKey
-    );
+    args.data.awsSecretAccessKey = this.secretKeyTokenService.sign(args.data.awsSecretAccessKey);
 
     return await this.prisma.awsEnvironment.create(args);
   }
 
   async update(args: Prisma.AwsEnvironmentUpdateArgs) {
     if (args.data.awsSecretAccessKey) {
-      args.data.awsSecretAccessKey = this.secretKeyTokenService.sign(
-        args.data.awsSecretAccessKey as string
-      );
+      args.data.awsSecretAccessKey = this.secretKeyTokenService.sign(args.data.awsSecretAccessKey as string);
     }
 
     return await this.prisma.awsEnvironment.update(args);

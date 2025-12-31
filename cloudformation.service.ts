@@ -1,21 +1,15 @@
-import {
-  CreateStackCommandOutput,
-  DeleteStackCommandOutput,
-} from '@aws-sdk/client-cloudformation';
+import {CreateStackCommandOutput, DeleteStackCommandOutput} from '@aws-sdk/client-cloudformation';
 import {BadRequestException, Injectable} from '@nestjs/common';
 import {AwsResourceStackState} from '@prisma/client';
 import {PrismaService} from '@framework/prisma/prisma.service';
-import {
-  AwsCloudFormationStackService,
-  CloudFormationStackType,
-} from './stack/stack.service';
+import {AwsCloudformationStackService, CloudFormationStackType} from './stack/stack.service';
 import {awsResourceStackPrismaMiddleware} from './cloudformation.prisma.middleware';
 
 @Injectable()
 export class AwsCloudformationService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly cloudformationStackService: AwsCloudFormationStackService
+    private readonly cloudformationStackService: AwsCloudformationStackService
   ) {
     this.prisma.$use(awsResourceStackPrismaMiddleware);
   }
@@ -52,9 +46,7 @@ export class AwsCloudformationService {
         stackParams: stack.params as object,
       })
     ) {
-      throw new BadRequestException(
-        'This infrastructure stack parameters are not ready.'
-      );
+      throw new BadRequestException('This infrastructure stack parameters are not ready.');
     }
 
     output = await this.cloudformationStackService.createResources(stack);

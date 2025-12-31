@@ -4,8 +4,7 @@ import {Injectable} from '@nestjs/common';
 export class ProductMessageTracker_Stack {
   static getStackParams() {
     return {
-      DatabaseHost:
-        'postgres-1.cmkxbdo0yf63.rds.cn-northwest-1.amazonaws.com.cn',
+      DatabaseHost: 'postgres-1.cmkxbdo0yf63.rds.cn-northwest-1.amazonaws.com.cn',
       DatabasePort: '5432',
       DatabaseMasterUsername: 'postgres',
       DatabaseMasterUserPassword: 'postgres',

@@ -19,12 +19,7 @@ export class ComputingFargate_Stack {
   }
 
   static getStackOutputKeys() {
-    return [
-      'RepoUrl',
-      'LoadBalancerUrl',
-      'CodePipelineName',
-      'CodePipelineUrl',
-    ];
+    return ['RepoUrl', 'LoadBalancerUrl', 'CodePipelineName', 'CodePipelineUrl'];
   }
 
   static getStackTemplate() {
