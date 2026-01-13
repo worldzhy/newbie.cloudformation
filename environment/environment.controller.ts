@@ -1,6 +1,6 @@
-import {Controller, Delete, Get, Patch, Body, Param, Post, BadRequestException} from '@nestjs/common';
-import {ApiTags, ApiBearerAuth, ApiBody} from '@nestjs/swagger';
-import {Prisma, AwsEnvironment} from '@prisma/client';
+import {BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post} from '@nestjs/common';
+import {ApiBearerAuth, ApiBody, ApiTags} from '@nestjs/swagger';
+import {AwsEnvironment, Prisma} from '@generated/prisma/client';
 import {PrismaService} from '@framework/prisma/prisma.service';
 import {AwsEnvironmentService} from '@microservices/cloudformation/environment/environment.service';
 

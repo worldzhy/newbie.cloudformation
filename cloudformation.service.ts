@@ -1,9 +1,8 @@
 import {CreateStackCommandOutput, DeleteStackCommandOutput} from '@aws-sdk/client-cloudformation';
 import {BadRequestException, Injectable} from '@nestjs/common';
-import {AwsResourceStackState} from '@prisma/client';
+import {AwsResourceStackState} from '@generated/prisma/client';
 import {PrismaService} from '@framework/prisma/prisma.service';
 import {AwsCloudformationStackService, CloudFormationStackType} from './stack/stack.service';
-import {awsResourceStackPrismaMiddleware} from './cloudformation.prisma.middleware';
 
 @Injectable()
 export class AwsCloudformationService {
@@ -11,7 +10,7 @@ export class AwsCloudformationService {
     private readonly prisma: PrismaService,
     private readonly cloudformationStackService: AwsCloudformationStackService
   ) {
-    this.prisma.$use(awsResourceStackPrismaMiddleware);
+    // this.prisma.$use(awsResourceStackPrismaMiddleware);
   }
 
   listStackTypes() {

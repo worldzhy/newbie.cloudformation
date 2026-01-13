@@ -1,5 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import {Prisma} from '@prisma/client';
+import {Prisma} from '@generated/prisma/client';
 import {PrismaService} from '@framework/prisma/prisma.service';
 import {AwsSecretKeyTokenService} from '../token/secretkey-token.service';
 

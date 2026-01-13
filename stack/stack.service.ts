@@ -8,7 +8,7 @@ import {
   DeleteStackCommandOutput,
   DescribeStacksCommand,
 } from '@aws-sdk/client-cloudformation';
-import {AwsResourceStack, AwsEnvironment} from '@prisma/client';
+import {AwsEnvironment, AwsResourceStack} from '@generated/prisma/client';
 import {CicdBuild_Stack} from './cicd-build.stack';
 import {CicdPipeline_Stack} from './cicd-pipeline.stack';
 import {CicdRepository_Stack} from './cicd-repository.stack';
