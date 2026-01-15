@@ -10,7 +10,7 @@
     "AWS_CLOUDFORMATION_SECRETKEY_TOKEN_SECRET": ""
   },
   "dependencies": {
-    "@aws-sdk/client-cloudformation": "^3.454.0",
+    "@aws-sdk/client-cloudformation": "latest",
     "@nestjs/jwt": "latest"
   }
 }
